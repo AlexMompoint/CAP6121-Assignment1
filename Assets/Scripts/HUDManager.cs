@@ -25,6 +25,7 @@ public class HUDManager : MonoBehaviour
         get { return _health; }
         set
         {
+            if(value >= 0)
             _health = value;
             HealthUI.text = "Health:" + health.ToString();
         }
@@ -32,8 +33,8 @@ public class HUDManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        score = 1;
-        health = 99;
+        score = 0;
+        health = 100;
     }
 
     // Update is called once per frame

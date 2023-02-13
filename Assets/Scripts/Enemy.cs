@@ -24,12 +24,11 @@ public class Enemy : MonoBehaviour
             //Debug.Log($"{transform.parent.GetComponent<Rigidbody>().velocity}");
             transform.parent.GetComponent<Rigidbody>().velocity = -transform.parent.GetComponent<Rigidbody>().velocity;
             hud.score++;
-        } else if(other.name != "LightSaber")
-        {
-            Destroy(transform.parent.gameObject);
-            Destroy(gameObject);
-
-        }
+            return;
+        } else if(other.name == "HeadHitbox") { hud.health -= 5; }
+        else if(other.name == "LightSaber") { return; }
+        Destroy(transform.parent.gameObject);
+        Destroy(gameObject);
         //Debug.Log($"{other.name}");
     }
 }

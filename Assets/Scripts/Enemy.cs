@@ -9,16 +9,11 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
+    HUDManager hud;
     // Start is called before the first frame update
     void Start()
     {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
+        hud = FindObjectOfType<HUDManager>();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -26,14 +21,15 @@ public class Enemy : MonoBehaviour
         if (other.name == "Blade")
         {
             //print($"{gameObject.name} hit {other.name}");
-            Debug.Log($"{transform.parent.GetComponent<Rigidbody>().velocity}");
+            //Debug.Log($"{transform.parent.GetComponent<Rigidbody>().velocity}");
             transform.parent.GetComponent<Rigidbody>().velocity = -transform.parent.GetComponent<Rigidbody>().velocity;
+            hud.score++;
         } else if(other.name != "LightSaber")
         {
             Destroy(transform.parent.gameObject);
             Destroy(gameObject);
 
         }
-        Debug.Log($"{other.name}");
+        //Debug.Log($"{other.name}");
     }
 }

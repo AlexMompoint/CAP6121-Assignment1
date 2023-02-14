@@ -7,16 +7,23 @@ public class Robot : MonoBehaviour
     public GameObject LaserPrefab;
     private float lastTimeShot = 0;
     private Animator _animator;
+    private HUDManager _hud;
     public Transform player;
     // Start is called before the first frame update
     void Start()
     {
+        _hud = FindObjectOfType<HUDManager>();
         _animator = gameObject.GetComponent<Animator>();
     }
 
     // Update is called once per frame
     void Update()
     {
+        transform.LookAt(player);
+        Vector3 xz =  transform.rotation.eulerAngles;
+        xz.x = .0f;
+        xz.z = .0f;
+        transform.rotation = Quaternion.Euler(xz);
         if (Time.time - lastTimeShot > 3 && _animator.GetCurrentAnimatorStateInfo(0).IsTag("Idle"))
         {
             lastTimeShot = Time.time;
@@ -24,4 +31,11 @@ public class Robot : MonoBehaviour
             newObject.GetComponent<Projectile>().target = player;
         }
     }
+    private void OnTriggerEnter(Collider other)
+    {
+        _hud.score += 10;
+        _animator.SetTrigger("Dead");
+
+    }
+
 }
